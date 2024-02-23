@@ -1,26 +1,24 @@
 # Binaries for programs and plugins
-./back/*.exe
-./back/*.exe~
-./back/*.dll
-./back/*.so
-./back/*.dylib
+back/*.exe
+back/*.exe~
+back/*.dll
+back/*.so
+back/*.dylib
 
 # Test binary, built with "go test -c"
-*.test
+back/*.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+back/*.out
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
 # Go workspace file
-go.work
-tmp/
+back/go.work
+back/tmp/
 
 # IDE specific files
 .vscode
 .idea
-.env
-
-./back/.env
+back/.env
