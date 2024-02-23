@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/header";
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const roboto = Roboto({ subsets: ["latin"], weight: ["300", "400", "700"] });
 
 export const metadata: Metadata = {
  title: "Treinador de Futebol",
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
  return (
   <html lang="pt-br">
-   <body className={montserrat.className}>{children}</body>
+   <body className={roboto.className}>
+    <Header />
+    {children}
+   </body>
   </html>
  );
 }
