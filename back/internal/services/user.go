@@ -9,6 +9,7 @@ import (
 
 type User struct {
     ID        string 	`json:"id"`
+		UserName	string	`json:"user_name"`
     Name      string    `json:"name"`
     Email     string    `json:"email"`
     Password  string    `json:"-"`
@@ -16,6 +17,7 @@ type User struct {
     UpdatedAt time.Time `json:"updated_at"`
 }
 type UserPayload struct {
+	UserName string `json:"user_name"`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -27,7 +29,7 @@ type UsersList struct {
 func (u *User) GetAllUsers() ([]*User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
-	query := `SELECT id, name, email, created_at, updated_at FROM users`
+	query := `SELECT id, user_name, name, email, created_at, updated_at FROM users`
 	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
@@ -37,6 +39,7 @@ func (u *User) GetAllUsers() ([]*User, error) {
 		var user User
 		err := rows.Scan(
 			&user.ID,
+			&user.UserName,
 			&user.Name,
 			&user.Email,
 			&user.CreatedAt,
@@ -53,10 +56,11 @@ func (u *User) GetAllUsers() ([]*User, error) {
 func (u *User) GetUserByID(id string) (*User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
-	query := `SELECT id, name, email, created_at, updated_at FROM users WHERE id = $1`
+	query := `SELECT id, user_name, name, email, created_at, updated_at FROM users WHERE id = $1`
 	row := db.QueryRowContext(ctx, query, id)
 	err := row.Scan(
 		&u.ID,
+		&u.UserName,
 		&u.Name,
 		&u.Email,
 		&u.CreatedAt,
@@ -77,8 +81,8 @@ func (u *User) CreateUser(user User) (*User, error) {
         return nil, err
     }
 
-    query := `INSERT INTO users (name, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, created_at, updated_at`
-    err = db.QueryRowContext(ctx, query, user.Name, user.Email, hashedPassword, time.Now(), time.Now()).Scan(&user.ID, &user.Name, &user.Email, &user.CreatedAt, &user.UpdatedAt)
+    query := `INSERT INTO users (user_name, name, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, user_name, name, email, created_at, updated_at`
+    err = db.QueryRowContext(ctx, query, user.UserName, user.Name, user.Email, hashedPassword, time.Now(), time.Now()).Scan(&user.ID, &user.UserName, &user.Name, &user.Email, &user.CreatedAt, &user.UpdatedAt)
     if err != nil {
         return nil, err
     }
@@ -89,8 +93,8 @@ func (u *User) CreateUser(user User) (*User, error) {
 func (u *User) UpdateUser(id string, body User) (*User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
-	query := `UPDATE users SET name = $1, email = $2, updated_at = $3 WHERE id = $4`
-	_, err := db.ExecContext(ctx, query, body.Name, body.Email, time.Now(), id)
+	query := `UPDATE users SET user_name = $1, name = $2, email = $3, updated_at = $4 WHERE id = $5`
+	_, err := db.ExecContext(ctx, query, body.UserName, body.Name, body.Email, time.Now(), id)
 	if err != nil {
 		return  nil, err
 	}
