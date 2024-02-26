@@ -69,6 +69,27 @@ func Routes() http.Handler{
             r.Delete("/", controllers.DeletePost)        
         
         })
+
+		router.Route("/api/v1/days", func(r chi.Router) {
+			r.Get("/", controllers.GetAllDays)
+			r.Post("/create", controllers.CreateDay)
+			r.Route("/{id}", func(r chi.Router) {
+				r.Get("/", controllers.GetDayById)
+				r.Put("/", controllers.UpdateDay)
+				r.Delete("/", controllers.DeleteDay)
+			})
+		})
+
+		router.Route("/api/v1/cities", func(r chi.Router) {
+			r.Get("/", controllers.GetAllCities)
+			r.Post("/create", controllers.CreateCity)
+			r.Route("/{id}", func(r chi.Router) {
+				r.Get("/", controllers.GetCityById)
+				r.Put("/", controllers.UpdateCity)
+				r.Delete("/", controllers.DeleteCity)
+			})
+		})
+				
     // Swagger route
     router.Route(("/swagger"), func(r chi.Router) {
         r.Get("/*", httpSwagger.WrapHandler)
