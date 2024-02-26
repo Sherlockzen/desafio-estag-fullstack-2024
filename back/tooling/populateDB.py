@@ -30,6 +30,12 @@ with conn.cursor() as cur:
         post_content = f'Post content by {user_name}'
         cur.execute("INSERT INTO posts (user_id, content) VALUES (%s, %s);", (user_id, post_content))
 
+        city_name = random.choice(["São Paulo", "Rio de Janeiro", "Salvador", "Recife", "João Pessoa", "Caruaru"])
+        cur.execute("INSERT INTO cities (user_id, name) VALUES (%s, %s);", (user_id, city_name))
+
+        days_week = random.choice(["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Terça, Sexta", "Segunda, Quarta", "Segunda, Terça, Quarta, Quinta, Sexta, Sábado, Domingo", "Sábado, Domingo"])
+        cur.execute("INSERT INTO days (user_id, days_week) VALUES (%s, %s);", (user_id, days_week))
+
     for i in range(50):
         album_title = f'Album_{uuid.uuid4()}'
         album_description = f'Description for {album_title}'
