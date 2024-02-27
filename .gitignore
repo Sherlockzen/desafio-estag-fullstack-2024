@@ -22,3 +22,4 @@ back/tmp/
 .vscode
 .idea
 back/.env
+back/main
