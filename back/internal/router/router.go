@@ -39,6 +39,8 @@ func Routes() http.Handler{
         r.Route("/{id}", func(r chi.Router) {
             r.Get("/albums", controllers.GetAlbumsByUserID)  
             r.Get("/posts", controllers.GetPostsByUserID) 
+						r.Get("/days", controllers.GetDaysByUserId)
+						r.Get("/cities", controllers.GetCitiesByUserId)
             r.Delete("/albums/{album_id}", controllers.RemoveAlbumFromUser)
             r.Get("/", controllers.GetUserByID)  
             r.Put("/", controllers.UpdateUser)          
