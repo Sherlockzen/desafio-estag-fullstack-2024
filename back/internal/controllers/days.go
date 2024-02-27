@@ -76,3 +76,13 @@ func DeleteDay(w http.ResponseWriter, r *http.Request) {
 	}
 	helpers.WriteJSON(w, http.StatusOK, helpers.Envelop{"day": "deleted"}, nil)
 }
+
+func GetDaysByUserId(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	day, err := day.GetDaysByUserId(id)
+	if err != nil {
+		helpers.MessageLogs.ErrorLog.Println("Error getting days by user id: ", err)
+		return
+	}
+	helpers.WriteJSON(w, http.StatusOK, helpers.Envelop{"day": day}, nil)
+}
