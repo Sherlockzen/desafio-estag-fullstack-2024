@@ -106,8 +106,8 @@ func (c *City) GetCityByUserId(id string) (*City, error) {
 	row := db.QueryRowContext(ctx, query, id)
 	err := row.Scan(
 		&c.ID,
-		&c.Name,
 		&c.UserId,
+		&c.Name,
 		&c.CreatedAt,
 		&c.UpdatedAt,
 	)

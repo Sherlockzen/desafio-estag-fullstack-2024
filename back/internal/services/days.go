@@ -100,15 +100,15 @@ func (d *Day) DeleteDay(id string) error {
 	return nil
 }
 
-func (d *Day) GetDayByUserId(id string) (*Day, error) {
+func (d *Day) GetDaysByUserId(id string) (*Day, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 	query := `SELECT id, user_id, days_week, created_at, updated_at FROM days WHERE user_id = $1`
 	row := db.QueryRowContext(ctx, query, id)
 	err := row.Scan(
 		&d.Id,
-		&d.DaysWeek,
 		&d.UserId,
+		&d.DaysWeek,
 		&d.CreatedAt,
 		&d.UpdatedAt,
 	)
