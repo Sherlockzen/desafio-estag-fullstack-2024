@@ -82,6 +82,7 @@ func GetDaysByUserId(w http.ResponseWriter, r *http.Request) {
 	day, err := day.GetDaysByUserId(id)
 	if err != nil {
 		helpers.MessageLogs.ErrorLog.Println("Error getting days by user id: ", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	helpers.WriteJSON(w, http.StatusOK, helpers.Envelop{"day": day}, nil)

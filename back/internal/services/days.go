@@ -100,20 +100,35 @@ func (d *Day) DeleteDay(id string) error {
 	return nil
 }
 
-func (d *Day) GetDaysByUserId(id string) (*Day, error) {
+func (d *Day) GetDaysByUserId(id string) ([]*Day, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 	query := `SELECT id, user_id, days_week, created_at, updated_at FROM days WHERE user_id = $1`
-	row := db.QueryRowContext(ctx, query, id)
-	err := row.Scan(
-		&d.Id,
-		&d.UserId,
-		&d.DaysWeek,
-		&d.CreatedAt,
-		&d.UpdatedAt,
-	)
+	rows, err := db.QueryContext(ctx, query, id)
 	if err != nil {
 		return nil, err
 	}
-	return d, nil
+	defer rows.Close()
+
+	var days []*Day
+	for rows.Next() {
+		var day Day
+		err := rows.Scan(
+			&day.Id,
+			&day.UserId,
+			&day.DaysWeek,
+			&day.CreatedAt,
+			&day.UpdatedAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		days = append(days, &day)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return days, nil
 }

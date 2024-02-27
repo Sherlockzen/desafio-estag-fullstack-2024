@@ -99,20 +99,33 @@ func (c *City) DeleteCity(id string) error {
 	return nil
 }
 
-func (c *City) GetCityByUserId(id string) (*City, error) {
+func (c *City) GetCityByUserId(id string) ([]*City, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 	query := `SELECT id, user_id, name, created_at, updated_at FROM cities WHERE user_id = $1`
-	row := db.QueryRowContext(ctx, query, id)
-	err := row.Scan(
-		&c.ID,
-		&c.UserId,
-		&c.Name,
-		&c.CreatedAt,
-		&c.UpdatedAt,
-	)
+	rows, err := db.QueryContext(ctx, query, id)
 	if err != nil {
 		return nil, err
 	}
-	return c, nil
+	defer rows.Close()
+
+	var cities []*City
+	for rows.Next() {
+		var city City
+		err := rows.Scan(
+			&city.ID,
+			&city.UserId,
+			&city.Name,
+			&city.CreatedAt,
+			&city.UpdatedAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		cities = append(cities, &city)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return cities, nil
 }
