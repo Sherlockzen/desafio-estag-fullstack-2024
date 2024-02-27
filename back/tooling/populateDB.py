@@ -22,7 +22,7 @@ conn.autocommit = True
 with conn.cursor() as cur:
     for i in range(50):
         user_name = f'User_{uuid.uuid4()}'
-        user_alias = f'AL_{user_name[-4:]}'
+        user_alias = f'AL_{user_name[-8:]}'
         user_email = f'{user_name.lower()}@example.com'
         cur.execute("INSERT INTO users (name, user_name, email, password) VALUES (%s, %s, %s, 'password') RETURNING id;", (user_name, user_alias, user_email))
         user_id = cur.fetchone()[0]
