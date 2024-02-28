@@ -84,12 +84,14 @@ export const getUsersPosts = async (currentPage: number = 1, pageSize: number = 
     const daysResp = await fetch(`${process.env.API_URL!}/api/v1/users/${userId}/days`);
     const daysData: Day = await daysResp.json().then(value => value.day[0]);
 
+
+
     usersWithPosts.push({
       id: user.id,
       userName: user.user_name,
       name: user.name,
       email: user.email,
-      posts: postsData.posts.length,
+      posts: postsData.posts?.length ?? 0,
       albums: albumsData.albums?.length ?? 0,
       days: daysData.days_week,
       city: citiesData.name,
