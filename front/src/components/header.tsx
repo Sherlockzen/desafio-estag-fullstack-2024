@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function Header() {
  return (
-  <div className=" h-[9.5625rem] border">
+  <div className=" h-[9.5625rem]">
    <div className=" bg-[#3D3D3D] p-6">
     <Image src={"/Logo.svg"} width={140} height={39} alt="Logo Sensedia" />
    </div>
