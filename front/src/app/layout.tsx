@@ -21,8 +21,13 @@ export default function RootLayout({
  return (
   <html lang="pt-br">
    <body className={roboto.className}>
-    <Header />
-    <div>{children}</div>
+    <div className=" flex flex-col justify-between h-svh">
+     <div>
+      <Header />
+      <div className=" mb-auto">{children}</div>
+     </div>
+     <footer className=" w-full bg-[#3D3D3D] h-[5.4375rem]"></footer>
+    </div>
    </body>
   </html>
  );
