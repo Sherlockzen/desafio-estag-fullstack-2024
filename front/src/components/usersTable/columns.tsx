@@ -54,11 +54,21 @@ export const columns: ColumnDef<User>[] = [
   accessorKey: "posts",
   header: "Posts",
   enableGlobalFilter: false,
+  cell: ({ row }) => {
+   return (
+    <div className=" w-full flex justify-center">{row.getValue("posts")}</div>
+   );
+  },
  },
  {
   accessorKey: "albums",
   header: "Álbuns",
   enableGlobalFilter: false,
+  cell: ({ row }) => {
+   return (
+    <div className=" w-full flex justify-center">{row.getValue("albums")}</div>
+   );
+  },
  },
  {
   id: "actions",
