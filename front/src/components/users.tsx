@@ -17,8 +17,8 @@ async function Users() {
  const { data, totalItems, totalPages } = await getUsersPosts();
 
  return (
-  <section className=" pt-3 w-full flex flex-col items-center">
-   <div className=" w-[54.375rem]">
+  <section className=" py-3 px-4 flex flex-col sm:items-center">
+   <div className=" lg:w-[54.375rem]">
     <h1 className=" font-medium text-2xl pb-9">Usuários</h1>
     <DataTable data={data} columns={columns} />
    </div>

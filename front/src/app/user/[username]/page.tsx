@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
  Card,
  CardContent,
@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getUsers } from "@/data/getUsers";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function Page({
@@ -16,7 +18,6 @@ export default async function Page({
 }: {
  params: { username: string };
 }) {
- await new Promise((resolve) => setTimeout(resolve, 2000)); //to simulate a loading
  const data = await getUsers();
  const user = data.users.find(
   (user) => user.user_name.toLowerCase() === params.username.toLowerCase()
@@ -58,7 +59,18 @@ export default async function Page({
      </div>
     </CardContent>
     <CardFooter>
-     <Button className="w-full">Voltar a tela de usuários</Button>
+     <Link
+      href={"/user"}
+      className={cn(
+       buttonVariants({
+        variant: "link",
+        size: "lg",
+       }),
+       "w-full uppercase"
+      )}
+     >
+      Voltar a tela de usuários
+     </Link>
     </CardFooter>
    </Card>
   </section>

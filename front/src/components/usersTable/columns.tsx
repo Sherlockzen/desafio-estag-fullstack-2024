@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/deleteDialog";
+import Link from "next/link";
 
 export type User = {
  id: string;
@@ -21,6 +22,13 @@ export const columns: ColumnDef<User>[] = [
   accessorKey: "userName",
   header: "Usuário",
   enableGlobalFilter: true,
+  cell: ({ row }) => {
+   return (
+    <Link href={`/user/${row.getValue("userName")}`} className=" font-bold">
+     {row.getValue("userName")}
+    </Link>
+   );
+  },
  },
  {
   accessorKey: "name",

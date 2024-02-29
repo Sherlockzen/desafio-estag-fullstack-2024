@@ -40,11 +40,11 @@ export const addUser = async (value: Value) => {
   });
 
   function daysResult(data: string[]) {
-    if (data.includes('sábado') && data.includes('domingo')) {
-      const dataResult = 'fim de semana';
+    if (data.length === 7) {
+      const dataResult = 'Todos';
       return dataResult;
-    } else if (data.length === 7) {
-      const dataResult = 'todos';
+    } else if (data.includes('sábado') && data.includes('domingo')) {
+      const dataResult = 'Fim de semana';
       return dataResult;
     }
 

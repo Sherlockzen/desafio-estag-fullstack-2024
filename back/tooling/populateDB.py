@@ -33,7 +33,7 @@ with conn.cursor() as cur:
         city_name = random.choice(["São Paulo", "Rio de Janeiro", "Salvador", "Recife", "João Pessoa", "Caruaru"])
         cur.execute("INSERT INTO cities (user_id, name) VALUES (%s, %s);", (user_id, city_name))
 
-        days_week = random.choice(["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Terça, Sexta", "Segunda, Quarta", "Segunda, Terça, Quarta, Quinta, Sexta, Sábado, Domingo", "Sábado, Domingo"])
+        days_week = random.choice(["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Terça, Sexta", "Segunda, Quarta", "Segunda, Quarta, Sexta", "Fim de semana", "Todos"])
         cur.execute("INSERT INTO days (user_id, days_week) VALUES (%s, %s);", (user_id, days_week))
 
     for i in range(50):

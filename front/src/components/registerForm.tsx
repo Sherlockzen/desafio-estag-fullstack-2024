@@ -78,7 +78,6 @@ function RegisterForm() {
  });
  const router = useRouter();
  async function onSubmit(values: z.infer<typeof formSchema>) {
-  console.log(values);
   await addUser(values);
   form.reset();
   router.push("/user");
