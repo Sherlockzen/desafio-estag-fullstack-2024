@@ -98,19 +98,8 @@ export const getUsersPosts = async (currentPage: number = 1, pageSize: number = 
     })
   }
 
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-
-  const paginatedData = usersWithPosts.slice(startIndex, endIndex);
-  const totalItems = usersWithPosts.length;
-  const totalPages = Math.ceil(totalItems / pageSize);
-
   return {
     data: usersWithPosts,
-    totalItems,
-    totalPages,
   }
 
-  // return usersWithPosts;
 }

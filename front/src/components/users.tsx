@@ -1,20 +1,10 @@
 import React from "react";
-import {
- Table,
- TableBody,
- TableCaption,
- TableCell,
- TableHead,
- TableHeader,
- TableRow,
-} from "@/components/ui/table";
-import { getUsers, getUsersPosts } from "@/data/getUsers";
-import Image from "next/image";
+import { getUsersPosts } from "@/data/getUsers";
 import { DataTable } from "@/components/usersTable/dataTable";
 import { columns } from "@/components/usersTable/columns";
 
 async function Users() {
- const { data, totalItems, totalPages } = await getUsersPosts();
+ const { data } = await getUsersPosts();
 
  return (
   <section className=" py-3 px-4 flex flex-col sm:items-center">
